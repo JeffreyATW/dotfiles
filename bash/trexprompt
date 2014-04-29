@@ -11,9 +11,10 @@ PS1_EXIT_RED="\[\033[38;5;208m\]\[\033[48;5;52m\]"
 # === Initializing static variables ===========================================
 case $TERM in
     xterm* | screen)
-        CORNER_TOP="\[\033(0l\033(B\]"
-        CORNER_BOTTOM="\[\033(0m\033(B\]"
-        LINE_TWO="\[\033(0qq\033(B\]"
+        CORNER_TOP="`echo -e "\xE2\x94\x8C"`"
+        CORNER_BOTTOM="`echo -e "\xE2\x94\x94"`"
+        LINE="`echo -e "\xE2\x94\x80"`"
+        LINE_TWO="$LINE$LINE"
         OPENBRACKET="`echo -e "\xE2\x95\xA2"`"
         CLOSEBRACKET="`echo -e "\xE2\x95\x9f"`"
         ;;
@@ -90,7 +91,7 @@ function prompt_command
 
 
     # === Third part of the prompt, for wide screens ==========================
-    # shows the current time and load on the right side of the screen
+    # shows the current time on the right side of the screen
     if [ ${COLUMNS} -gt 128 ];
     then
         local fill=$(printf "%$(($COLUMNS-${#usern}-${#hostn}-${#working_dir}-${#git_branch}-${#exitStatusLength}-46))s" '')
@@ -100,7 +101,7 @@ function prompt_command
 
     # === Last part of the prompt =============================================
     # adds a newline and an arrow
-    PS1="$PS1\n$CORNER_BOTTOM$LINE_TWO`echo -e "\xE2\x96\xBA"` "
+    PS1="$PS1\n$CORNER_BOTTOM`echo -e "\xE2\x94\x80"``echo -e "\xE2\x94\x80"``echo -e "\xE2\x96\xBA"` "
 }
 
 PROMPT_COMMAND=prompt_command
