@@ -68,14 +68,16 @@ function prompt_command
     local hostn=$(hostname -s)
     local usern=$(whoami)
 
-    if [ ${#PWD} -gt 50 ];
+    HOME_PWD="${PWD/#$HOME/~}"
+
+    if [ ${#HOME_PWD} -gt 50 ];
     then
-        local working_dir=${PWD:0:10}...${PWD:$((${#PWD}-37))};
+        local working_dir=${HOME_PWD:0:12}...${HOME_PWD:$((${#HOME_PWD}-35))};
     else
-        local working_dir=$PWD
+        local working_dir=$HOME_PWD
     fi
 
-    PS1="\n$NO_COLOUR$CORNER_TOP$LINE_TWO$OPENBRACKET$PROMPT_COLOR_1 $usern@$hostn $NO_COLOUR$CLOSEBRACKET$LINE_TWO$OPENBRACKET$PROMPT_COLOR_2 ${working_dir} $NO_COLOUR$CLOSEBRACKET$LINE_TWO$exitStatus"
+    PS1="\n$NO_COLOUR$CORNER_TOP$LINE_TWO$OPENBRACKET$PROMPT_COLOR_1 ${working_dir} $NO_COLOUR$CLOSEBRACKET$LINE_TWO$OPENBRACKET$PROMPT_COLOR_2 $usern@$hostn $NO_COLOUR$CLOSEBRACKET$LINE_TWO$exitStatus"
         
 
     # === Second part of the prompt: git info =================================
