@@ -104,6 +104,10 @@ function prompt_command
     # === Last part of the prompt =============================================
     # adds a newline and an arrow
     PS1="$PS1\n$CORNER_BOTTOM`echo -e "\xE2\x94\x80"``echo -e "\xE2\x94\x80"``echo -e "\xE2\x96\xBA"` "
+
+    if [ $ITERM_SESSION_ID ]; then
+        echo -ne "\033];${PWD##*/}\007";
+    fi
 }
 
 PROMPT_COMMAND=prompt_command
